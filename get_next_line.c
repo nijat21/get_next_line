@@ -1,50 +1,28 @@
 #include "get_next_line.h"
 
-char *single_line(char *buffer)
-{
-    char *line;
-    int count;
-    int i;
-
-    count = count_line_chars(buffer);
-    line = (char *)malloc(count * sizeof(char) + 1);
-    if (!line)
-        return NULL;
-    i = 0;
-    while (i < count)
-    {
-        line[i] = buffer[i];
-        i++;
-    }
-    return line;
-}
-
 // Reads one line at a call and returns that read line
 char *get_next_line(int fd)
 {
     static char buf[BUFFER_SIZE];
+    static int curr = 0;
     ssize_t bytes_read;
     char *line;
-    int i;
-    static char *end;
 
-    // Allocate memory for buf with max count that will be derived from compile flag -D BUFFER_SIZE or default
-    bytes_read = read(fd, &buf, BUFFER_SIZE);
-    if (bytes_read <= 0)
-        return NULL;
-
-    i = 0;
-    while (i < bytes_read && buf[i] != '\n')
+    // Allocate memory for buf with max count that will be derived from compile flag -D BUFFER_SIZE or default;
+    if (!buf[curr])
     {
-        line[i] = buf[i];
-        i++;
+        bytes_read = read(fd, buf, BUFFER_SIZE);
+        if (bytes_read <= 0)
+            return NULL;
+        buf[bytes_read] = '\0';
+        curr = 0;
     }
-    line[i] = '\n';
-    end = &buf[i];
+    line = single_line(&buf[curr]);
+    curr += count_line_chars(&buf[curr]);
+    if (buf[curr] == '\n')
+        curr++;
     return line;
 }
-
-// ssize_t read(int fd, void *buf, size_t count);
 
 int main()
 {
@@ -52,8 +30,19 @@ int main()
     if (fd == -1)
         return (0);
 
-    printf("%i\n", fd);
-
-    for (int i = 0; i < 5; i++)
-        printf("%s\n", get_next_line(fd));
+    // get_next_line(fd);
+    // get_next_line(fd);
+    // get_next_line(fd);
+    // get_next_line(fd);
+    printf("First: %s", get_next_line(fd));
+    printf("Second: %s", get_next_line(fd));
+    printf("Third: %s", get_next_line(fd));
+    printf("Fourth: %s", get_next_line(fd));
+    printf("Fifth: %s", get_next_line(fd));
 }
+
+// RETURN VALUES
+// 1. Buffer is longer than the line? Returns a line and delays the next read until the leftover is finished
+// 2. Buffer is shorter than the line?
+// If nothing to read or error, return NULL
+// Undefined behaviour reading binary

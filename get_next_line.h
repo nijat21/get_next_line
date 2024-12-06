@@ -2,7 +2,7 @@
 #define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 42
+#define BUFFER_SIZE 120
 #endif
 
 #include <unistd.h>
@@ -12,5 +12,6 @@
 
 char *get_next_line(int fd);
 int count_line_chars(char *str);
+char *single_line(char *buffer);
 
 #endif

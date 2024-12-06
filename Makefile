@@ -1,12 +1,11 @@
 NAME=get_next_line.a
 
 CC=cc
-CFLAGS = -Wall -Wextra -Werror 
-
+CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -D BUFFER_SIZE=$(BUFFER_SIZE)
-BUFFER_SIZE ?= 42
+BUFFER_SIZE ?= 120
 
-SRCS := get_next_line.c 
+SRCS := get_next_line.c get_next_line_utils.c
 OBJS := $(SRCS:%.c=%.o)
 
 all:$(NAME)
@@ -17,9 +16,11 @@ $(NAME): $(OBJS)
 %.o: %.c get_next_line.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean: rm -fv $(OBJS)
+clean:
+	rm -fv $(OBJS)
 
-fclean: rm -fv $(NAME)
+fclean:
+	rm -fv $(NAME)
 
 re: fclean all
 
