@@ -3,7 +3,7 @@ NAME=get_next_line.a
 CC=cc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -D BUFFER_SIZE=$(BUFFER_SIZE)
-BUFFER_SIZE ?= 120
+BUFFER_SIZE ?= 1
 
 SRCS := get_next_line.c get_next_line_utils.c
 OBJS := $(SRCS:%.c=%.o)

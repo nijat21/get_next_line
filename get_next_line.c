@@ -1,44 +1,44 @@
 #include "get_next_line.h"
 
-// Reads one line at a call and returns that read line
 char *get_next_line(int fd)
 {
     static char buf[BUFFER_SIZE];
     static int curr = 0;
-    ssize_t bytes_read;
+    static int bytes_read = 0;
     char *line;
+    int is_end = 0;
+    static int temp_end = 0;
+    // static char temp[BUFFER_SIZE];
+    // static int bytes_read = 0;
 
     // Allocate memory for buf with max count that will be derived from compile flag -D BUFFER_SIZE or default;
+    if (temp_end)
+        return NULL;
+    is_end = 0;
     if (!buf[curr])
     {
         bytes_read = read(fd, buf, BUFFER_SIZE);
-        if (bytes_read <= 0)
+        if (bytes_read < 0)
             return NULL;
-        buf[bytes_read] = '\0';
-        curr = 0;
+        else if (bytes_read == 0)
+            is_end = 1;
+        else
+            is_end = 0;
+        if (!is_end)
+        {
+            buf[bytes_read] = '\0';
+            curr = 0;
+        }
     }
-    line = single_line(&buf[curr]);
+    if (bytes_read < BUFFER_SIZE)
+        is_end = 1;
+    line = single_line(&buf[curr], is_end);
+    // if (!is_end)
     curr += count_line_chars(&buf[curr]);
-    if (buf[curr] == '\n')
+    if (curr < bytes_read && buf[curr] == '\n')
         curr++;
+    temp_end = is_end;
     return line;
-}
-
-int main()
-{
-    int fd = open("text.txt", O_RDONLY);
-    if (fd == -1)
-        return (0);
-
-    // get_next_line(fd);
-    // get_next_line(fd);
-    // get_next_line(fd);
-    // get_next_line(fd);
-    printf("First: %s", get_next_line(fd));
-    printf("Second: %s", get_next_line(fd));
-    printf("Third: %s", get_next_line(fd));
-    printf("Fourth: %s", get_next_line(fd));
-    printf("Fifth: %s", get_next_line(fd));
 }
 
 // RETURN VALUES
