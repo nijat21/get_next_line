@@ -14,7 +14,6 @@ static void test_get_next_line(const char *filename)
     while ((line = get_next_line(fd)) != NULL)
     {
         printf("%s", line); // Print the line read by get_next_line
-        free(line);         // Free the line allocated by get_next_line
     }
     close(fd);
 }
