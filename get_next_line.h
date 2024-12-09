@@ -13,5 +13,6 @@
 char *get_next_line(int fd);
 int count_line_chars(char *str);
 char *single_line(char *buffer, int is_end);
+void *ft_memcpy(void *dst, const void *src);
 
 #endif
