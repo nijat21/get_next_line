@@ -14,7 +14,8 @@ char *get_next_line(int fd);
 int count_line_chars(char *str);
 char *single_line(char *buffer);
 char *ft_strjoin(char *s1, char *s2);
-
 char *ft_strdup(char *s1);
+
+void *ft_memset(void *b, int c, size_t len);
 
 #endif

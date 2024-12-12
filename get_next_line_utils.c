@@ -56,22 +56,37 @@ char *ft_strjoin(char *s1, char *s2)
     return start;
 }
 
-char *ft_strdup(char *s1)
+char *ft_strdup(char *str)
 {
     char *copy;
     int i;
 
-    if (!s1)
-        s1 = "";
-    copy = malloc(count_line_chars(s1) + 1);
+    if (!str)
+        str = "";
+    copy = malloc(count_line_chars(str) + 1);
     if (!copy)
         return NULL;
     i = 0;
-    while (s1[i])
+    while (str[i])
     {
-        copy[i] = s1[i];
+        copy[i] = str[i];
         i++;
     }
     copy[i] = '\0';
     return copy;
+}
+
+void *ft_memset(void *b, int c, size_t len)
+{
+    size_t i;
+    char *str;
+
+    str = (char *)b;
+    i = 0;
+    while (i < len)
+    {
+        str[i] = (unsigned char)c;
+        i++;
+    }
+    return str;
 }
