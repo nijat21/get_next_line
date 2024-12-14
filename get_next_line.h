@@ -16,6 +16,6 @@ char *single_line(char *buffer);
 char *ft_strjoin(char *s1, char *s2);
 char *ft_strdup(char *s1);
 
-void *ft_memset(void *b, int c, size_t len);
+void *memset_null(void *b, size_t len);
 
 #endif

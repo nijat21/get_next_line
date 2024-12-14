@@ -19,15 +19,16 @@ char *single_line(char *buffer)
     int count;
     int i;
 
+    if (!buffer)
+        return NULL;
     count = count_line_chars(buffer);
-    line = (char *)malloc((count + 1) * sizeof(char));
+    line = malloc((count + 1) * sizeof(char));
     if (!line)
         return NULL;
     i = 0;
     while (i < count)
     {
         line[i] = buffer[i];
-        // printf("BUFF[i]: %c\n", buffer[i]);
         i++;
     }
     line[i] = '\0';
@@ -40,18 +41,19 @@ char *ft_strjoin(char *s1, char *s2)
     char *str;
     char *start;
 
+    if (!s1 && !s2)
+        return NULL;
     len = count_line_chars(s1) + count_line_chars(s2);
     str = malloc((len + 1) * sizeof(char));
     if (!str)
         return NULL;
     start = str;
-    while (s1 && *s1)
-        *str++ = *s1++;
-    while (s2 && *s2)
-    {
-        // printf("S2: %c\n", *s2);
-        *str++ = *s2++;
-    }
+    if (s1)
+        while (*s1)
+            *str++ = *s1++;
+    if (s2)
+        while (*s2)
+            *str++ = *s2++;
     *str = '\0';
     return start;
 }
@@ -62,8 +64,8 @@ char *ft_strdup(char *str)
     int i;
 
     if (!str)
-        str = "";
-    copy = malloc(count_line_chars(str) + 1);
+        return NULL;
+    copy = malloc((count_line_chars(str) + 1) * sizeof(char));
     if (!copy)
         return NULL;
     i = 0;
@@ -74,19 +76,4 @@ char *ft_strdup(char *str)
     }
     copy[i] = '\0';
     return copy;
-}
-
-void *ft_memset(void *b, int c, size_t len)
-{
-    size_t i;
-    char *str;
-
-    str = (char *)b;
-    i = 0;
-    while (i < len)
-    {
-        str[i] = (unsigned char)c;
-        i++;
-    }
-    return str;
 }
