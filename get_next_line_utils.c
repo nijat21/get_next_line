@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nismayil <nismayil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nismayil <nismayil@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:19:35 by nismayil          #+#    #+#             */
-/*   Updated: 2024/12/14 16:44:36 by nismayil         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:22:40 by nismayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	count_line_chars(char *str)
+int count_line_chars(char *str)
 {
-	int	count;
+	int count;
 
 	if (!str)
 		return (0);
@@ -26,11 +26,11 @@ int	count_line_chars(char *str)
 	return (count);
 }
 
-char	*single_line(char *buffer)
+char *single_line(char *buffer)
 {
-	char	*line;
-	int		count;
-	int		i;
+	char *line;
+	int count;
+	int i;
 
 	if (!buffer)
 		return (NULL);
@@ -48,11 +48,11 @@ char	*single_line(char *buffer)
 	return (line);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char *ft_strjoin(char *s1, char *s2)
 {
-	size_t	len;
-	char	*str;
-	char	*start;
+	size_t len;
+	char *str;
+	char *start;
 
 	if (!s1 && !s2)
 		return (NULL);
@@ -71,29 +71,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (start);
 }
 
-char	*ft_strdup(char *str)
-{
-	char	*copy;
-	int		i;
-
-	if (!str)
-		return (NULL);
-	copy = malloc((count_line_chars(str) + 1) * sizeof(char));
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		copy[i] = str[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
-}
-
-void	free_line(char *some_line)
+void free_line(char *some_line)
 {
 	if (some_line)
 		free(some_line);
-	return ;
+	return;
 }
